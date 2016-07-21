@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Loading...</title>
+    <title>Missing, presumed eaten: Tim's KitKat. No reward.</title>
     <style>
         body, html {
             background: #333333;
@@ -117,8 +117,6 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    <script src='nprogress.js'></script>
-    <link rel='stylesheet' href='nprogress.css'/>
 </head>
 <body>
 <main>
@@ -134,14 +132,12 @@
     </article>
 </main>
 <script src="jquery-3.1.0.min.js"></script>
-<script src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.min.js"></script>
 <script>
 
     var measuredHeight, measuredWidth = 500;
     var hasScaled = false;
     var activeQuote;
-    var activeTimer;
-    var timerCountdown = 0;
 
     function fadeInTweet(event) {
         $('article.twitter').css({
@@ -200,13 +196,10 @@
     }
 
     function renderQuote(quote) {
-        clearTimeout(activeTimer);
-        NProgress.done();
-        NProgress.set(0.0);
         activeQuote = quote;
         measuredHeight = undefined;
         measuredWidth = 500;
-        $('article.twitter').hide().empty();
+        $('article.twitter').hide();
         if (activeQuote.twitter) {
             $('article.twitter').css({
                 display: 'block',
@@ -262,63 +255,32 @@
     }
 
     function randomQuote() {
-        timerCountdown = 0;
         var index = Math.floor(Math.random() * quoteData.length);
         renderQuote(quoteData[index]);
-        nextSecond();
-    }
-
-    function nextSecond() {
-        activeTimer = setTimeout(function () {
-            timerCountdown++;
-            NProgress.set(timerCountdown / 10);
-            if (timerCountdown == 10) {
-                randomQuote();
-            } else {
-                nextSecond();
-            }
-        }, 1000);
     }
 
 //    function preloadAllImages() {
-////        var styleTag = 'body:after {content:';
-////        quoteData.forEach(function (quote) {
-////            if (quote.background) {
-////                styleTag += 'url('+quote.background+')'
-////            }
-////        });
-////        styleTag += ';display: none;}';
-////        $("head").append("<style type='text/css'>" + styleTag + "</style>");
+//        var styleTag = 'body:after {content:';
+//        quoteData.forEach(function (quote) {
+//            if (quote.background) {
+//                styleTag += 'url(https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=' + encodeURI(quote.background) + '&container=focus&resize_w=10) '
+//            }
+//        });
+//        styleTag += ';display: none;}';
+//        $("head").append("<style type='text/css'>" + styleTag + "</style>");
 //    }
-
-    NProgress.configure({
-        trickle: false,
-        showSpinner: false
-    });
 
     var backgroundColors = ['#f62459', '#008b8b', '#3477db', '#ae59b6', '#e63022', '#cf000f', '#600000', '#802200', '#5a440d', '#34515e', '#550055', '#004055', '#123622'];
 
-    var quoteData;
+    var quoteData = [{"id":"5790ff0267dd0f41bd779f6a","body":"Missing, presumed eaten: Tim's KitKat. No reward.","attribution":"","background":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAADCAIAAAA/Y+msAAAAQUlEQVR42mNQkJEz1ta0kJKu1NOV4+Lm5ORlsJGXKJASPpQY0+hoWehhVW1myGAvItKoo5Okq9ZvYdhprXdgQgUAOvUNe4qaVdsAAAAASUVORK5CYII=","tags":["tim"]}];
 
-//    fetch('./quotes.json', {
-//        method: 'get'
-//    }).then(function (response) {
-//        return response.json();
-//    }).then(function (quotes) {
-        var quoteData = [{"id":"5790ff0267dd0f41bd779f6a","body":"Missing, presumed eaten: Tim's KitKat. No reward.","attribution":"","background":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAADCAIAAAA/Y+msAAAAQUlEQVR42mNQkJEz1ta0kJKu1NOV4+Lm5ORlsJGXKJASPpQY0+hoWehhVW1myGAvItKoo5Okq9ZvYdhprXdgQgUAOvUNe4qaVdsAAAAASUVORK5CYII=","tags":["tim"]},{"id":"5791050254bde2fb6b43e23a","body":"Roads? Where we're going, we don't need roads.","attribution":"","background":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAADCAIAAAA/Y+msAAAAQklEQVR42mMQEROXV9MtKCwLTsyQklUQExdnSK7uevj46sTS7Fm1JUcPbg6NTWGYEK+oLCUqLCYmraohwMe9sFYDAP1/EYbbL3GbAAAAAElFTkSuQmCC","tags":[]},{"id":"579105ae70eb33f191bae011","body":"It's a dangerous business, Frodo, going out your door. You step onto the road, and if you don't keep your feet, there's no knowing where you might be swept off to.","attribution":"","background":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAADCAIAAAA/Y+msAAAAQklEQVR42mMo9lPpLwk+uX/N9SNLljZFziz1ZEjwsgiyUbNVFajN9E/2NAmy1WFQEuIR5eYQ4mCT5GGT5WPXlBIEAFdbD5dqjJwwAAAAAElFTkSuQmCC","tags":[]},{"id":"578ab0b778c8438ba6fd8958","body":"I can't change the direction of the wind, but I can adjust my sails to always reach my destination.","attribution":"","background":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAIAAAAiZtkUAAAAV0lEQVR42gFMALP/ADVtllmHqZKltbi5xNPQ2OHb4ABlkq6Jprulopaqopfc2N3i3+QAvMrUysnKkH5mp5eC29bY5+PoAChJWDRTYDQ6MjhCPXiNk5ansPmmLDFFZmJqAAAAAElFTkSuQmCC","tags":[]},{"id":"579105b6ca9fa55898c01655","body":"★★★ - epic, ambitious & accessible","attribution":"","background":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAADCAYAAACwAX77AAAAUklEQVR42mNgkDLm4jNwvGns6Pk/1M/nv4yE+G0GBgZuoLgxl4SJ/U1He8v/uanh/5VVFG8ziAMlGKSkuMTULW72ttX8n1aT819bV+u2uLg4NwAJBhYCgVSnigAAAABJRU5ErkJggg==","tags":["pacific","rim"]}];
+    randomQuote();
+//    preloadAllImages();
+    $(document.body).on('click touchstart', function (e) {
+        e.preventDefault();
         randomQuote();
-//        preloadAllImages();
-        $(document.body).on('click touchstart', function (e) {
-            e.preventDefault();
-            randomQuote();
-            return false;
-        });
-//    }).catch(function (err) {
-//        renderQuote({
-//            body: 'Error 404',
-//            attribution: 'Failed to load quote'
-//        });
-//    });
+        return false;
+    });
 
     var hidden, visibilityChange;
     if (typeof document.hidden !== "undefined") {
