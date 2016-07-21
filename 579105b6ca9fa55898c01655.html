@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Loading...</title>
+    <title>★★★ - epic, ambitious & accessible</title>
     <style>
         body, html {
             background: #333333;
@@ -117,8 +117,6 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    <script src='nprogress.js'></script>
-    <link rel='stylesheet' href='nprogress.css'/>
 </head>
 <body>
 <main>
@@ -133,64 +131,13 @@
         <aside class="quote-tags"></aside>
     </article>
 </main>
-<DIV id="message">Talk to me</DIV>
 <script src="jquery-3.1.0.min.js"></script>
-<script src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.min.js"></script>
 <script>
-window.onload = function () {
-cast.receiver.logger.setLevelValue(0);
-window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
 
-// handler for the 'ready' event
-castReceiverManager.onReady = function (event) {
-console.log('Received Ready event: ' + JSON.stringify(event.data));
-window.castReceiverManager.setApplicationState("Application status is ready...");
-};
-
-// handler for 'senderconnected' event
-castReceiverManager.onSenderConnected = function (event) {
-console.log('Received Sender Connected event: ' + event.data);
-console.log(window.castReceiverManager.getSender(event.data).userAgent);
-};
-
-// handler for 'senderdisconnected' event
-castReceiverManager.onSenderDisconnected = function (event) {
-console.log('Received Sender Disconnected event: ' + event.data);
-if (window.castReceiverManager.getSenders().length == 0) {
-window.close();
-}
-};
-
-window.messageBus = window.castReceiverManager.getCastMessageBus('urn:x-cast:com.google.cast.sample.helloworld');
-
-// handler for the CastMessageBus message event
-window.messageBus.onMessage = function (event) {
-console.log('Message [' + event.senderId + ']: ' + event.data);
-// display the message from the sender
-displayText(event.data);
-// inform all senders on the CastMessageBus of the incoming message event
-// sender message listener will be invoked
-window.messageBus.send(event.senderId, event.data);
-}
-
-// initialize the CastReceiverManager with an application status message
-window.castReceiverManager.start({statusText: "Application is starting"});
-console.log('Receiver Manager started');
-
-// utility function to display the text message in the input field
-function displayText(text) {
-console.log(text);
-document.getElementById("message").innerHTML = text;
-window.castReceiverManager.setApplicationState(text);
-}
-}
-</script>
-<script>
     var measuredHeight, measuredWidth = 500;
     var hasScaled = false;
     var activeQuote;
-    var activeTimer;
-    var timerCountdown = 0;
 
     function fadeInTweet(event) {
         $('article.twitter').css({
@@ -249,13 +196,10 @@ window.castReceiverManager.setApplicationState(text);
     }
 
     function renderQuote(quote) {
-        clearTimeout(activeTimer);
-        NProgress.done();
-        NProgress.set(0.0);
         activeQuote = quote;
         measuredHeight = undefined;
         measuredWidth = 500;
-        $('article.twitter').hide().empty();
+        $('article.twitter').hide();
         if (activeQuote.twitter) {
             $('article.twitter').css({
                 display: 'block',
@@ -311,67 +255,32 @@ window.castReceiverManager.setApplicationState(text);
     }
 
     function randomQuote() {
-        timerCountdown = 0;
         var index = Math.floor(Math.random() * quoteData.length);
         renderQuote(quoteData[index]);
-        nextSecond();
     }
 
-    function nextSecond() {
-        activeTimer = setTimeout(function () {
-            timerCountdown++;
-            NProgress.set(timerCountdown / 10);
-            if (timerCountdown == 10) {
-                randomQuote();
-            } else {
-                nextSecond();
-            }
-        }, 1000);
-    }
-
-    //    function preloadAllImages() {
-    ////        var styleTag = 'body:after {content:';
-    ////        quoteData.forEach(function (quote) {
-    ////            if (quote.background) {
-    ////                styleTag += 'url('+quote.background+')'
-    ////            }
-    ////        });
-    ////        styleTag += ';display: none;}';
-    ////        $("head").append("<style type='text/css'>" + styleTag + "</style>");
-    //    }
-
-    NProgress.configure({
-        trickle: false,
-        showSpinner: false
-    });
+//    function preloadAllImages() {
+//        var styleTag = 'body:after {content:';
+//        quoteData.forEach(function (quote) {
+//            if (quote.background) {
+//                styleTag += 'url(https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=' + encodeURI(quote.background) + '&container=focus&resize_w=10) '
+//            }
+//        });
+//        styleTag += ';display: none;}';
+//        $("head").append("<style type='text/css'>" + styleTag + "</style>");
+//    }
 
     var backgroundColors = ['#f62459', '#008b8b', '#3477db', '#ae59b6', '#e63022', '#cf000f', '#600000', '#802200', '#5a440d', '#34515e', '#550055', '#004055', '#123622'];
 
-    var quoteData;
+    var quoteData = [{"id":"579105b6ca9fa55898c01655","body":"★★★ - epic, ambitious & accessible","attribution":"","background":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAADCAYAAACwAX77AAAAUklEQVR42mNgkDLm4jNwvGns6Pk/1M/nv4yE+G0GBgZuoLgxl4SJ/U1He8v/uanh/5VVFG8ziAMlGKSkuMTULW72ttX8n1aT819bV+u2uLg4NwAJBhYCgVSnigAAAABJRU5ErkJggg==","tags":["pacific","rim"]}];
 
-    //    fetch('./quotes.json', {
-    //        method: 'get'
-    //    }).then(function (response) {
-    //        return response.json();
-    //    }).then(function (quotes) {
-    var quoteData =
-    ###
-    insert
-    ###
-    ;
     randomQuote();
-    //        preloadAllImages();
+//    preloadAllImages();
     $(document.body).on('click touchstart', function (e) {
         e.preventDefault();
         randomQuote();
         return false;
     });
-    //    }).catch(function (err) {
-    //        renderQuote({
-    //            body: 'Error 404',
-    //            attribution: 'Failed to load quote'
-    //        });
-    //    });
 
     var hidden, visibilityChange;
     if (typeof document.hidden !== "undefined") {
